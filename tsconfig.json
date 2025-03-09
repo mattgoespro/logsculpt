@@ -6,12 +6,10 @@
     "target": "esnext",
     "moduleResolution": "node",
     "baseUrl": ".",
-    "lib": ["esnext"],
     "types": ["node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-    "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "emitDeclarationOnly": true
   }
 }

@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import "./chalk";
+import "../formatting/chalk";
 import { prettyStringify } from "../formatting/text-formatting";
 
 export type Logger = {

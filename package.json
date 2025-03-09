@@ -7,10 +7,11 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "esbuild --platform=node --outdir=dist --format=esm --bundle lib/index.ts",
+    "preprebuild": "tsc -p . --outfile ./dist/index.js",
     "lint": "eslint lib",
     "format": "prettier --write lib",
-    "prebuild": "rimraf dist",
+    "clean": "rimraf dist",
     "publish:dry-run": "npm publish --dry-run"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
+    "esbuild": "^0.25.0",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "prettier": "^3.5.3",

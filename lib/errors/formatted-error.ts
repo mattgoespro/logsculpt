@@ -7,10 +7,13 @@ type FormattedErrorOptions<T = undefined> = T extends undefined ? ErrorOptions :
  * Create a formatted error, surrounded by a box with a title and custom options that are used to
  * format the main error message.
  */
-export abstract class FormattedError<O extends Record<string, unknown> = undefined> extends Error {
+export abstract class FormattedError<O = undefined> extends Error {
   cause?: Error;
 
-  constructor(message: string, public options?: FormattedErrorOptions<O>) {
+  constructor(
+    message: string,
+    public options?: FormattedErrorOptions<O>
+  ) {
     super(message, options);
     this.message = this._formatMessage(options?.cause as Error);
   }

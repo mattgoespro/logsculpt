@@ -61,7 +61,10 @@
       "color": "terminal.ansiGreen",
       "icon": "terminal-bash",
       "overrideName": true,
-      "path": "C:\\Program Files\\Git\\bin\\bash.exe"
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "env": {
+        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}"
+      }
     }
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
