@@ -8,11 +8,12 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild --platform=node --outdir=dist --format=esm --bundle lib/index.ts",
-    "preprebuild": "tsc -p . --outfile ./dist/index.js",
+    "prebuild": "tsc -p . --outfile ./dist/index.js",
     "lint": "eslint lib",
     "format": "prettier --write lib",
     "clean": "rimraf dist",
-    "publish:dry-run": "npm publish --dry-run"
+    "publish": "npm publish",
+    "prepublish": "npm run clean && npm run build"
   },
   "dependencies": {
     "boxen": "^8.0.1",
