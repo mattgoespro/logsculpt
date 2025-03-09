@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile",
+      "detail": "Compile the application main scripts to Windows executables.",
+      "type": "npm",
+      "script": "compile",
+      "problemMatcher": "$tsc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "run-script",
+      "type": "shell",
+      "command": "bun run --env-file .env --hot --watch src/scripts/${input:noArgsScript}/main.ts",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "clean",
+      "detail": "Remove the temporary directory.",
+      "type": "shell",
+      "command": "rm -rf temp"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "noArgsScript",
+      "type": "pickString",
+      "options": [
+        {
+          "value": "meditation-picker"
+        },
+        {
+          "value": "image-to-icon"
+        },
+        {
+          "value": "vdl-stream"
+        }
+      ],
+      "description": "Select the script to debug."
+    }
+  ],
+  "options": {
+    "env": {
+      "NODE_ENV": "production",
+      "NODE_OPTIONS": "-r ./register.js --disable-warning=ExperimentalWarning --disable-warning=DeprecationWarning",
+      "PATH": "${env:PATH};${workspaceFolder}\\node_modules\\.bin"
+    }
+  },
+  "presentation": {
+    "showReuseMessage": false
+  }
+}
