@@ -52,8 +52,13 @@
     "color": "terminal.ansiMagenta",
     "icon": "terminal-debian",
     "overrideName": true,
-    "path": "C:\\Program Files\\Git\\bin\\bash.exe"
+    "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "env": {
+      "NODE_OPTIONS": "--experimental-vm-modules"
+    }
   },
+
+  "prettier.configPath": "prettier.config.cjs",
   "terminal.integrated.defaultProfile.windows": "bash-node",
   "terminal.integrated.profiles.windows": {
     "bash-node": {

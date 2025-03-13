@@ -1,4 +1,12 @@
 node_modules/
+test/
+temp/
 .git/
 .vscode/
-temp/
+.gitignore
+.gitattributes
+package-lock.json
+tsconfig.json
+jest.config.ts
+prettier.config.cjs
+eslint.config.mjs
