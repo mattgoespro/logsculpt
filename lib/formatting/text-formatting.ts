@@ -1,5 +1,12 @@
 import boxen from "boxen";
 
+export type PrettyStringifyOptions = {
+  objectKeyModifier?: (key: string) => string;
+  objectValueModifier?: (value: unknown) => string;
+  sortObjectKeys?: boolean;
+  quoteStrings?: boolean;
+};
+
 /**
  * Centers each line of text bounded by a specified width.
  *

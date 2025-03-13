@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import "../formatting/chalk";
-import { prettyStringify } from "../formatting/text-formatting";
+import "./chalk";
+import { prettyStringify, PrettyStringifyOptions } from "../formatting/text-formatting";
 
 export type Logger = {
   info: (...messageArgs: LogMessage[]) => void;
@@ -10,6 +10,8 @@ export type Logger = {
   createLogMessage: (message: LogMessage, addPrefix?: boolean) => string;
 };
 
+export type LoggerOptions = PrettyStringifyOptions & { prefix?: boolean };
+
 type LogMessage = unknown;
 
 /**
@@ -17,7 +19,7 @@ type LogMessage = unknown;
  * @param level the log level
  * @returns the formatted log level
  */
-function formatLogLevel(level: "info" | "warn" | "error") {
+export function formatLogLevel(level: "info" | "warn" | "error") {
   let style = chalk.bold;
 
   switch (level) {
@@ -38,11 +40,9 @@ function formatLogLevel(level: "info" | "warn" | "error") {
  *
  * @param name the log message prefix
  */
-export function createLogger(name: string): Logger {
-  const createLogMessage = (message: LogMessage, addPrefix = false) => {
-    return `${addPrefix ? `[${chalk.green(name)}]: ` : ""}${chalk.grey(
-      prettyStringify(message, { sortObjectKeys: true, quoteStrings: false })
-    )}`;
+export function createLogger(name: string, options: LoggerOptions = { prefix: true }): Logger {
+  const createLogMessage = (message: LogMessage, addPrefix = options.prefix) => {
+    return `${addPrefix ? `[${chalk.green(name)}]: ` : ""}${chalk.grey(prettyStringify(message, options))}`;
   };
 
   const logger: Logger = {
@@ -57,22 +57,24 @@ export function createLogger(name: string): Logger {
 
       if (hasLineBreaks(messageArgs)) {
         for (const messageLine of messageLines) {
-          console.log(`${formatLogLevel("info")}: ${createLogMessage(messageLine)}`);
+          console.log(
+            `${formatLogLevel("info")}: ${createLogMessage(messageLine, options.prefix)}`
+          );
         }
         return;
       }
 
       console.log(
-        `${formatLogLevel("info")}: ${messageArgs.map((arg) => createLogMessage(arg)).join(" ")}`
+        `${formatLogLevel("info")}: ${messageArgs.map((arg) => createLogMessage(arg, options.prefix)).join(" ")}`
       );
     },
     warn: (...messageArgs: LogMessage[]) =>
       console.warn(
-        `${formatLogLevel("warn")}: ${messageArgs.map((arg) => createLogMessage(arg)).join(" ")}`
+        `${formatLogLevel("warn")}: ${messageArgs.map((arg) => createLogMessage(arg, options.prefix)).join(" ")}`
       ),
     error: (...messageArgs: LogMessage[]) =>
       console.error(
-        `${formatLogLevel("error")}: ${messageArgs.map((arg) => createLogMessage(arg)).join(" ")}`
+        `${formatLogLevel("error")}: ${messageArgs.map((arg) => createLogMessage(arg, options.prefix)).join(" ")}`
       ),
     singleError: (error: Error) => console.error(`${formatLogLevel("error")}: ${error.message}`),
     createLogMessage
