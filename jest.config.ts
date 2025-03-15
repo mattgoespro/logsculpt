@@ -28,12 +28,12 @@ const config: Config = {
         useESM: true
       }
     ]
+  },
+  globals: {
+    "ts-jest": {
+      useESM: true
+    }
   }
-  // globals: {
-  //   "ts-jest": {
-  //     useESM: true
-  //   }
-  // }
 };
 
 export default config;

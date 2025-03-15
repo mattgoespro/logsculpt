@@ -1,5 +1,6 @@
 {
   "include": ["lib"],
+  "files": ["esbuild.config.ts"],
   "exclude": ["libe_modules"],
   "compilerOptions": {
     "module": "esnext",

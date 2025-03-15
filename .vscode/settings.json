@@ -57,7 +57,7 @@
       "NODE_OPTIONS": "--experimental-vm-modules"
     }
   },
-
+  "jest.jestCommandLine": "npm run test --",
   "prettier.configPath": "prettier.config.cjs",
   "terminal.integrated.defaultProfile.windows": "bash-node",
   "terminal.integrated.profiles.windows": {
@@ -68,7 +68,8 @@
       "overrideName": true,
       "path": "C:\\Program Files\\Git\\bin\\bash.exe",
       "env": {
-        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}"
+        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}",
+        "NODE_OPTIONS": "--experimental-vm-modules"
       }
     }
   },

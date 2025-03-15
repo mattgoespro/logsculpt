@@ -1,12 +1,5 @@
 import boxen from "boxen";
 
-export type PrettyStringifyOptions = {
-  objectKeyModifier?: (key: string) => string;
-  objectValueModifier?: (value: unknown) => string;
-  sortObjectKeys?: boolean;
-  quoteStrings?: boolean;
-};
-
 /**
  * Centers each line of text bounded by a specified width.
  *
@@ -83,39 +76,45 @@ export function nestContentBoxes(...boxes: { title: string; contents: string }[]
 /**
  * Options for formatting JSON objects.
  *
- * @property { (key: string) => string } [objectKeyModifier] - A callback function that formats object keys.
- * @property { (value: unknown) => string } [objectValueModifier] - A callback function that formats object values.
- * @property { boolean } [sortObjectKeys] - Whether to sort object keys.
- * @property { boolean } [quoteStrings] - Whether to quote string values.
+ * @property prefix - Whether to include a prefix for each line of the formatted string.
+ * @property indent - The initial indentation level for the formatted string.
+ * @property objectKeyModifier - A function that modifies object keys before formatting.
+ * @property objectValueModifier - A function that modifies object values before formatting.
+ * @property sortObjectKeys - Whether to sort object keys before formatting.
+ * @property quoteStrings - Whether to quote string values in the formatted string.
  */
-type FormatJsonOptions = {
+
+export type PrettyStringifyOptions = {
+  prefix?: boolean | PrettyStringifyPrefixFn;
+  indent?: number;
   objectKeyModifier?: (key: string) => string;
   objectValueModifier?: (value: unknown) => string;
   sortObjectKeys?: boolean;
   quoteStrings?: boolean;
 };
 
+type PrettyStringifyPrefixFn = (name: string) => string;
+
 /**
  * Converts a given value to a pretty-printed string representation.
  *
  * @param value - The value to be pretty-printed. Can be of any type.
  * @param options - Optional formatting options for JSON strings.
- * @param indent - The number of spaces to use for indentation. Default is 0.
+ * @param indent - The initial indentation level for the formatted string. Defaults to 0.
  * @returns The pretty-printed string representation of the value.
  * @throws Will throw an error if the value type is unsupported.
  */
-export function prettyStringify(
-  value: unknown,
-  options?: FormatJsonOptions | undefined,
-  indent = 0
-): string {
+export function prettyStringify(value: unknown, options?: PrettyStringifyOptions): string {
+  const initialIndent = options?.indent ?? 0;
+
   switch (typeof value) {
     case "string":
       return options?.quoteStrings ? `"${value}"` : value;
     case "boolean":
     case "number":
-    case "undefined":
       return value.toString();
+    case "undefined":
+      return "undefined";
     case "function":
       return value.toString();
     case "object":
@@ -128,14 +127,14 @@ export function prettyStringify(
           return "[]";
         }
 
-        return formatArray(value, options, indent);
+        return formatArray(value, options, initialIndent);
       }
 
       if (Object.keys(value).length === 0) {
         return "{}";
       }
 
-      return formatObject(value as Record<string, unknown>, options, indent);
+      return formatObject(value as Record<string, unknown>, options, initialIndent);
     default:
       throw new Error(`Unsupported object type: ${typeof value}`);
   }
@@ -149,13 +148,12 @@ export function prettyStringify(
  * @param indent - Indentation level.
  * @returns The formatted array as a JSON string.
  */
-function formatArray(
-  array: object[],
-  options: FormatJsonOptions | undefined,
-  indent: number
-): string {
+function formatArray(array: object[], options: PrettyStringifyOptions, indent: number): string {
   const formattedArray = array
-    .map((value) => `${" ".repeat(indent + 2)}${prettyStringify(value, options, indent + 2)}`)
+    .map(
+      (value) =>
+        `${" ".repeat(indent + 2)}${prettyStringify(value, { ...options, indent: indent + 2 })}`
+    )
     .join(`,\n`);
   return `[\n${formattedArray}\n${" ".repeat(indent)}]`;
 }
@@ -170,7 +168,7 @@ function formatArray(
  */
 function formatObject(
   object: Record<string, unknown>,
-  options?: FormatJsonOptions,
+  options?: PrettyStringifyOptions,
   indent = 0
 ): string {
   const keyModifier = options?.objectKeyModifier ?? ((key) => key);
@@ -188,14 +186,14 @@ function formatObject(
         typeof value === "number" ||
         typeof value === "boolean"
       ) {
-        return `${" ".repeat(indent + 2)}${keyModifier(key)}: ${valueModifier(value)}`;
+        const quotedValue = options?.quoteStrings ? `"${value}"` : value;
+        return `${" ".repeat(indent + 2)}${keyModifier(key)}: ${valueModifier(quotedValue)}`;
       }
 
-      return `${" ".repeat(indent + 2)}${keyModifier(key)}: ${prettyStringify(
-        value,
-        options,
-        indent + 2
-      )}`;
+      return `${" ".repeat(indent + 2)}${keyModifier(key)}: ${prettyStringify(value, {
+        ...options,
+        indent: indent + 2
+      })}`;
     })
     .join(`,\n`);
   return `{\n${formattedObject}\n${" ".repeat(indent)}}`;

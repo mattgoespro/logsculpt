@@ -17,6 +17,7 @@
     "antiantisepticeye.vscode-color-picker",
     "steoates.autoimport",
     "yoavbls.pretty-ts-errors",
-    "connor4312.esbuild-problem-matchers"
+    "connor4312.esbuild-problem-matchers",
+    "orta.vscode-jest"
   ]
 }
