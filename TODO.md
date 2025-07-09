@@ -1,5 +1,5 @@
 # TODO
 
-## Additional Options
+## Additional Logger Options
 
 - `sortArrays`: boolean

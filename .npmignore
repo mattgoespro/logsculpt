@@ -8,5 +8,7 @@ temp/
 package-lock.json
 tsconfig.json
 jest.config.ts
+tsup.config.ts
 prettier.config.cjs
 eslint.config.mjs
+TODO.md

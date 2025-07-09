@@ -1,7 +1,7 @@
-import eslintPrettier from "eslint-config-prettier";
-import eslintTs from "typescript-eslint";
+import eslintConfigPrettier from "eslint-config-prettier";
+import tseslint from "typescript-eslint";
 
-export default eslintTs.config(
+export default tseslint.config(
   {
     files: ["lib"]
   },
@@ -20,6 +20,6 @@ export default eslintTs.config(
   {
     ignores: ["node_modules", "dist", "temp"]
   },
-  eslintTs.configs.recommended,
-  eslintPrettier
+  tseslint.configs.recommended,
+  eslintConfigPrettier
 );

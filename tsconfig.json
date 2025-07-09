@@ -1,7 +1,6 @@
 {
-  "include": ["lib"],
-  "files": ["esbuild.config.ts"],
-  "exclude": ["libe_modules"],
+  "include": ["lib/**/*.ts"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
@@ -12,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "emitDeclarationOnly": true,
+    "outDir": "dist",
     "paths": {
       "logsculpt": ["lib/index.ts"]
     }
