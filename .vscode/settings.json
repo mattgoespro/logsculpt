@@ -40,8 +40,10 @@
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.suggest.completeFunctionCalls": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "jest.jestCommandLine": "npm run test --",
   "npm-intellisense.scanDevDependencies": true,
   "npm-outdated.majorUpdateProtection": false,
+  "prettier.configPath": "prettier.config.cjs",
   "search.exclude": {
     "**/dist": true,
     "**/node_modules": true,
@@ -50,29 +52,28 @@
   "terminal.integrated.automationProfile.windows": {
     "args": ["-l"],
     "color": "terminal.ansiMagenta",
-    "icon": "terminal-debian",
-    "overrideName": true,
-    "path": "C:\\Program Files\\Git\\bin\\bash.exe",
     "env": {
       "NODE_OPTIONS": "--experimental-vm-modules"
-    }
+    },
+    "icon": "terminal-debian",
+    "overrideName": true,
+    "path": "C:\\Program Files\\Git\\bin\\bash.exe"
   },
-  "jest.jestCommandLine": "npm run test --",
-  "prettier.configPath": "prettier.config.cjs",
   "terminal.integrated.defaultProfile.windows": "bash-node",
   "terminal.integrated.profiles.windows": {
     "bash-node": {
       "args": ["-l"],
       "color": "terminal.ansiGreen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules",
+        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}"
+      },
       "icon": "terminal-bash",
       "overrideName": true,
-      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
-      "env": {
-        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}",
-        "NODE_OPTIONS": "--experimental-vm-modules"
-      }
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe"
     }
   },
+  "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.iconTheme": "material-icon-theme"

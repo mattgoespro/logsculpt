@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import "../formatting/chalk";
-import { prettyStringify, PrettyStringifyOptions } from "../formatting/text-formatting";
+import { prettyStringify, PrettyStringifyOptions } from "lib/formatting/pretty-stringify";
 
 export type Logger = {
   info: (...messageArgs: LogMessage[]) => void;
