@@ -19,6 +19,7 @@ import { prettyStringify } from "../formatting/pretty-stringify";
  */
 export function createLogger(name: string, options?: LoggerOptions): Logger {
   const prefix = options?.prefix ?? true;
+  const print = options?.printer ?? console.log;
 
   const createLogMessage: CreateLogMessageFn = (
     message: LogMessage,
@@ -44,12 +45,12 @@ export function createLogger(name: string, options?: LoggerOptions): Logger {
 
     if (isMessageNewlineEscaped(messageArgs)) {
       for (const messageLine of messageLines) {
-        console.log(createLogMessage(messageLine, { level: "info", addPrefix: prefix }));
+        print(createLogMessage(messageLine, { level: "info", addPrefix: prefix }));
       }
       return;
     }
 
-    console.log(
+    print(
       messageArgs
         .map((arg) => createLogMessage(arg, { level: "info", addPrefix: prefix }))
         .join(" ")
@@ -60,18 +61,18 @@ export function createLogger(name: string, options?: LoggerOptions): Logger {
     info: logInfo,
     next: logInfo,
     warn: (...messageArgs: LogMessage[]) =>
-      console.warn(
+      print(
         `${messageArgs.map((arg) => createLogMessage(arg, { level: "warn", addPrefix: prefix })).join(" ")}`
       ),
     error: (...messageArgs: LogMessage[]) =>
-      console.error(
+      print(
         `${messageArgs.map((arg) => createLogMessage(arg, { level: "error", addPrefix: prefix })).join(" ")}`
       ),
     singleError: (error: Error) => {
-      console.error(`${stringifyPrefixWithLevel(name, "error", prefix)}${error.message}`);
+      print(`${stringifyPrefixWithLevel(name, "error", prefix)}${error.message}`);
 
       if (error.stack != null) {
-        console.error(
+        print(
           error.stack
             .split("\n")
             .map((line) => `${stringifyPrefixWithLevel(name, "error", prefix)}${line}`)
