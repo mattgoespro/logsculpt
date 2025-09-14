@@ -3,8 +3,12 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    files: ["lib"]
+    files: ["lib", "test"]
   },
+  {
+    ignores: ["node_modules", "dist", "temp"]
+  },
+  tseslint.configs.recommended,
   {
     rules: {
       "no-unused-vars": "off",
@@ -17,9 +21,5 @@ export default tseslint.config(
       ]
     }
   },
-  {
-    ignores: ["node_modules", "dist", "temp"]
-  },
-  tseslint.configs.recommended,
   eslintConfigPrettier
 );

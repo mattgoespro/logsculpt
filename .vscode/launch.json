@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "name": "Debug: Tests",
+      "request": "launch",
+      "args": ["test", "--", "--runInBand"],
+      "cwd": "${workspaceFolder}/test",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      },
+      "runtimeExecutable": "npm"
+    }
+  ]
+}

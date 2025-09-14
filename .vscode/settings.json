@@ -40,7 +40,10 @@
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.suggest.completeFunctionCalls": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "jest.jestCommandLine": "npm run test --",
+  "jest.debugMode": true,
+  "jest.nodeEnv": {
+    "NODE_OPTIONS": "--experimental-vm-modules --disable-warning=ExperimentalWarning"
+  },
   "npm-intellisense.scanDevDependencies": true,
   "npm-outdated.majorUpdateProtection": false,
   "prettier.configPath": "prettier.config.cjs",
@@ -53,7 +56,8 @@
     "args": ["-l"],
     "color": "terminal.ansiMagenta",
     "env": {
-      "NODE_OPTIONS": "--experimental-vm-modules"
+      "PATH": "${env:PATH}",
+      "NODE_OPTIONS": "--experimental-vm-modules --disable-warning=ExperimentalWarning"
     },
     "icon": "terminal-debian",
     "overrideName": true,
@@ -64,15 +68,16 @@
     "bash-node": {
       "args": ["-l"],
       "color": "terminal.ansiGreen",
-      "env": {
-        "NODE_OPTIONS": "--experimental-vm-modules",
-        "PATH": "${workspaceFolder}\\node_modules\\.bin:${env:PATH}"
-      },
       "icon": "terminal-bash",
       "overrideName": true,
-      "path": "C:\\Program Files\\Git\\bin\\bash.exe"
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "env": {
+        "PATH": "${env:PATH}",
+        "NODE_OPTIONS": "--experimental-vm-modules --disable-warning=ExperimentalWarning"
+      }
     }
   },
+  "testing.automaticallyOpenPeekViewDuringAutoRun": true,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
