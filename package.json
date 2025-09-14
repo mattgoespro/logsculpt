@@ -1,6 +1,6 @@
 {
   "name": "logsculpt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Sculpt your own console logger with custom formatting options and colors.",
   "author": "mattgoespro",
   "license": "MIT",
