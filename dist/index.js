@@ -25,7 +25,7 @@ Object.assign(chalk, {
   darkGreen: chalk.hex("#035800")
 });
 
-// lib/logging/model.ts
+// lib/logging/logger.model.ts
 import chalk2 from "chalk";
 var DefaultLogColors = {
   text: chalk2.grey,
@@ -170,8 +170,62 @@ function isAnsiColoredMessage(message) {
 function isMessageNewlineEscaped(logMessage) {
   return logMessage.some((message) => typeof message === "string" && message.includes("\n"));
 }
+
+// lib/errors/formatted-error.ts
+import boxen from "boxen";
+import chalk4 from "chalk";
+var FormattedError = class _FormattedError extends Error {
+  constructor(message, options) {
+    super(message, options);
+    this.options = options;
+    this.message = this._formatMessage(options?.cause);
+  }
+  cause;
+  /**
+   * Determines whether the given error is an instance of FormattedError.
+   *
+   * @param error the error to check
+   * @returns true if the error is an instance of FormattedError, otherwise false.
+   */
+  static isInstance(error) {
+    return error instanceof _FormattedError;
+  }
+  _formatMessage(cause) {
+    const createErrorBox = (title, contents, options = {
+      padding: 1,
+      borderStyle: "double"
+    }) => boxen(contents, { title, ...options, borderColor: "red" });
+    const message = this.options != null ? this.getErrorMessage(this.message, this.options) : this.message;
+    let errorBoxContents = message.split("\n");
+    let errorBoxWidth = errorBoxContents.reduce((max, line) => Math.max(max, line.length), 0);
+    if (cause == null) {
+      return createErrorBox(this.name, message, {
+        padding: 1,
+        margin: 1,
+        borderStyle: "double",
+        width: errorBoxWidth + 10
+      });
+    }
+    const causeBox = createErrorBox("Cause", cause.message, {
+      padding: 1,
+      borderStyle: "round"
+    });
+    errorBoxContents = `${message}
+
+${causeBox}`.split("\n");
+    errorBoxWidth = errorBoxContents.filter(Boolean).reduce((max, line) => Math.max(max, line.length), 0);
+    return createErrorBox(this.name, `${message}
+
+${chalk4.red(causeBox)}`, {
+      padding: 1,
+      margin: 1,
+      borderStyle: "double",
+      width: errorBoxWidth + 10
+    });
+  }
+};
 export {
+  FormattedError,
   PrefixNameLogPreset,
-  colorizeLogLevel,
   createLogger
 };

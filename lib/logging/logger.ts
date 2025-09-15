@@ -9,7 +9,7 @@ import {
   LogLevel,
   LogMessage,
   LogPrefixFn
-} from "./model";
+} from "./logger.model";
 import { prettyStringify } from "../formatting/pretty-stringify";
 
 /**

@@ -10,5 +10,5 @@ export default defineConfig({
   format: "esm",
   minify: process.env.NODE_ENV === "production",
   outDir: "dist",
-  dts: "lib/index.ts"
+  dts: true
 });
