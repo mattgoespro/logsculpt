@@ -1,7 +1,8 @@
 import { createLogger } from "logsculpt";
 import stripAnsi from "strip-ansi";
+import dedent from "dedent";
 
-describe("a `logsculpt` logger instance", () => {
+describe("a `logsculpt` logger instance's `createLogMessage` function", () => {
   test("should prefix the log with the level", () => {
     const logger = createLogger("test");
     const infoMsg = logger.createLogMessage("Info message", { level: "info" });
@@ -17,10 +18,13 @@ describe("a `logsculpt` logger instance", () => {
     test("should log a plain object without a prefix", () => {
       const logger = createLogger("log-object", { prefix: false });
       const msg = logger.createLogMessage({ a: 1, b: 2 }, { level: "info" });
-      expect(stripAnsi(msg)).toBe(`info: {
-info:   a: 1,
-info:   b: 2
-info: }`);
+      expect(stripAnsi(msg)).toBe(
+        dedent`info: {
+        info:   a: 1,
+        info:   b: 2
+        info: }
+      `
+      );
     });
 
     test("should log a string without a prefix", () => {
@@ -62,43 +66,51 @@ info: }`);
 
   describe("with the specified option provided", () => {
     test("should log using the `objectKeyModifier` option", () => {
-      const logger = createLogger("log-with-object-key-modifier", {
+      const logger = createLogger("log-okm", {
         objectKeyModifier: (key) => key.toUpperCase()
       });
       const msg = logger.createLogMessage({ a: 1, b: 2 }, { level: "info" });
-      expect(stripAnsi(msg)).toBe(`[log-with-object-key-modifier] info: {
-[log-with-object-key-modifier] info:   A: 1,
-[log-with-object-key-modifier] info:   B: 2
-[log-with-object-key-modifier] info: }`);
+      expect(stripAnsi(msg)).toBe(
+        dedent`[log-okm] info: {
+               [log-okm] info:   A: 1,
+               [log-okm] info:   B: 2
+               [log-okm] info: }`
+      );
     });
 
     test("should log using the `objectValueModifier` option", () => {
-      const logger = createLogger("log-with-object-value-modifier", {
+      const logger = createLogger("log-ovm", {
         objectValueModifier: (value) => (typeof value === "number" ? value * 2 : value).toString()
       });
       const msg = logger.createLogMessage({ a: 1, b: 2 }, { level: "info" });
-      expect(stripAnsi(msg)).toBe(`[log-with-object-value-modifier] info: {
-[log-with-object-value-modifier] info:   a: 2,
-[log-with-object-value-modifier] info:   b: 4
-[log-with-object-value-modifier] info: }`);
+      expect(stripAnsi(msg)).toBe(
+        dedent`[log-ovm] info: {
+               [log-ovm] info:   a: 2,
+               [log-ovm] info:   b: 4
+               [log-ovm] info: }`
+      );
     });
 
     test("should log using the `sortObjectKeys` option", () => {
-      const logger = createLogger("log-with-sorted-object-keys", { sortObjectKeys: true });
+      const logger = createLogger("log-sok", { sortObjectKeys: true });
       const msg = logger.createLogMessage({ b: 2, a: 1 }, { level: "info" });
-      expect(stripAnsi(msg)).toBe(`[log-with-sorted-object-keys] info: {
-[log-with-sorted-object-keys] info:   a: 1,
-[log-with-sorted-object-keys] info:   b: 2
-[log-with-sorted-object-keys] info: }`);
+      expect(stripAnsi(msg)).toBe(
+        dedent`[log-sok] info: {
+               [log-sok] info:   a: 1,
+               [log-sok] info:   b: 2
+               [log-sok] info: }`
+      );
     });
 
     test("should log using the `quoteStrings` option", () => {
-      const logger = createLogger("log-with-quoted-strings", { quoteStrings: true });
+      const logger = createLogger("log-qs", { quoteStrings: true });
       const msg = logger.createLogMessage({ a: "hello", b: "world" }, { level: "info" });
-      expect(stripAnsi(msg)).toBe(`[log-with-quoted-strings] info: {
-[log-with-quoted-strings] info:   a: "hello",
-[log-with-quoted-strings] info:   b: "world"
-[log-with-quoted-strings] info: }`);
+      expect(stripAnsi(msg)).toBe(
+        dedent`[log-qs] info: {
+               [log-qs] info:   a: "hello",
+               [log-qs] info:   b: "world"
+               [log-qs] info: }`
+      );
     });
   });
 });

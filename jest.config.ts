@@ -10,6 +10,7 @@ const tsEsmPresetConfig = createJsWithTsEsmPreset({});
 
 export default {
   ...tsEsmPresetConfig,
+  cache: false,
   globals: {},
   moduleNameMapper: {
     "^logsculpt$": "<rootDir>/lib/index.ts"

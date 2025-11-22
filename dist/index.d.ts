@@ -86,4 +86,4 @@ declare abstract class FormattedError<O = undefined> extends Error {
     private _formatMessage;
 }
 
-export { FormattedError, type Logger, type LoggerOptions, PrefixNameLogPreset, createLogger };
+export { type CreateLogMessageOptions, FormattedError, type LogLevel, type Logger, type LoggerOptions, PrefixNameLogPreset, createLogger };

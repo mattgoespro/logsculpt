@@ -1,6 +1,6 @@
 {
   "name": "logsculpt",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Sculpt your own console logger with custom formatting options and colors.",
   "author": "mattgoespro",
   "license": "MIT",
@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsup --config tsup.config.ts",
+    "publish": "npm run build && npm publish",
     "test": "jest",
     "lint": "eslint lib",
     "format": "prettier --write lib",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.10",
+    "dedent": "^1.7.0",
     "esbuild": "^0.25.0",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
